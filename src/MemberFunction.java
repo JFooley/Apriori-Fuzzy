@@ -8,12 +8,16 @@ public class MemberFunction {
     this.size = membershipFunctionSize;
     this.name = name;
 
-    // ########## VER COMO DEFINIR AUTOMATICAMENTE AS REGIÕES ########## 
-    float x0 = 0, x1 = 0, x3 = 0;
+    double range = upperLimit - lowerLimit;
+    double offset = range / (this.size - 1);
+    double x0 = 0, x1 = 0, x3 = 0;
 
     regions = new Fuzzy[this.size];
     for (int i = 0; i < this.size; i++) {
-      Fuzzy object = new Fuzzy(name + i + "/" + this.size, x0, x1, x3); 
+      x0 = lowerLimit + (i - 1) * offset;
+      x1 = lowerLimit + i * offset;
+      x3 = lowerLimit + (i + 1) * offset;
+      Fuzzy object = new Fuzzy(name + (i + 1) + "/" + this.size, x0, x1, x3); 
       this.regions[i] = object;
     }
   }
@@ -25,7 +29,7 @@ public class MemberFunction {
 
     regions = new Classic[this.size];
     for (int i = 0; i < this.size; i++) {
-      Classic object = new Classic(name + i + "/" + this.size, values[i]); 
+      Classic object = new Classic(name + (i + 1) + "/" + this.size, values[i]); 
       this.regions[i] = object;
     }
   }

@@ -1,11 +1,11 @@
 public class Fuzzy implements Logic{
-  double x0, x1, x3, y;
+  double x0, x1, x3, y = 1.0;
   String name;
 
   public Fuzzy() {
   }
 
-  public Fuzzy(String name, float x0, float x1, float x3) {
+  public Fuzzy(String name, double x0, double x1, double x3) {
     this.name = name;
     this.x0 = x0;
     this.x1 = x1;
