@@ -12,7 +12,7 @@ public class Classic implements Logic{
     
     @Override
     public double Fuzzifica(String X) {
-        if (X == this.value) {
+        if (this.value.equals(X)) {
             return 1;
         } else {
             return 0;

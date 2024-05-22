@@ -90,18 +90,20 @@ public class DataSet{
             // Preenche a matriz de dados cru
             this.lin = dataBuffer.size();
             this.col = inputs.length + outputs.length;
-            this.Data = new String[lin][col];
+            this.Data = new String[this.lin][this.col];
+            this.outputData = new String[this.lin][this.col];
 
-            for (int i = 0; i < this.lin ; i++) {
+            for (int i = 0; i < this.lin; i++) {
                 String[] values = dataBuffer.get(i).split(", ");
                 this.Data[i] = values;
+
             }
 
             // Gera a matriz fuzzyficada
-            for (int lin = 0; lin < this.lin; lin++) {
-                for (int col = 0; col < this.col; col++) { 
-                    String outRegion = this.membershipFunctions.get(col).getClass(this.Data[lin][col]); // Escolhe a função de pertinencia especifica daquele atributo e calcula qual região ele pertence
-                    this.outputData[lin][col] = outRegion;
+            for (int i_lin = 0; i_lin < this.lin; i_lin++) {
+                for (int j_col = 0; j_col < this.col; j_col++) { 
+                    String outRegion = this.membershipFunctions.get(j_col).getClass(this.Data[i_lin][j_col]); // Escolhe a função de pertinencia especifica daquele atributo e calcula qual região ele pertence
+                    this.outputData[i_lin][j_col] = outRegion;
                 }
             }
             

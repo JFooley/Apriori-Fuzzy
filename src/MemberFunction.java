@@ -36,7 +36,7 @@ public class MemberFunction {
 
   // Seleciona a classe com maior grau de pertinencia
   public String getClass(String X) {
-    String outClass = "";
+    String outClass = "Null";
     double outValue = 0;
 
     for (int i = 0; i < this.regions.length; i++) {
