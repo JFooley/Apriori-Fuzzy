@@ -51,7 +51,7 @@ public class DataSet{
                 }
 
                 else if (line.contains("@attribute") && !dataStart){
-                    Pattern patternFuzzy = Pattern.compile("@attribute\\s+(\\w+)\\s+real\\s+\\[(\\d+\\.\\d+),\\s+(\\d+\\.\\d+)\\]");
+                    Pattern patternFuzzy = Pattern.compile("@attribute\\s+(\\w+)\\s+real\\s+\\[([\\d\\.E\\-]+),\\s*([\\d\\.E\\-]+)\\]");
                     Matcher matcherFuzzy = patternFuzzy.matcher(line);
 
                     Pattern patternClassic = Pattern.compile("@attribute\\s+(\\w+)\\s+\\{([^{}]+)\\}");

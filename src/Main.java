@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
-    public static void main(String[] args) throws Exception { 
+    public static void main(String[] args) throws Exception {         
         // Defina o caminho para a pasta raiz de configs
         Path configsDir = Paths.get("../configs");
 

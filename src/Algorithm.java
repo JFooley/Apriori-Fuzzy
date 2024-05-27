@@ -3,7 +3,7 @@ public class Algorithm {
         // Debug debug = new Debug();
         // debug.run_tests();
 
-        System.out.println("Name: " + config_name);
+        System.out.println("Running FARC-NEW on " + config_name);
         System.out.println("Train: " + dataset_tra + " Teste: " + dataset_tst);
         System.out.println("Labels: " + labels_size + " Min_sup: " + min_sup + " Min_confidence: " + min_confidence);
         
