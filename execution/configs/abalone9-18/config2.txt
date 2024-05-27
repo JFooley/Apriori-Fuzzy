@@ -1,0 +1,5 @@
+Training = "../datasets/abalone9-18/abalone9-18-5-3tra.dat"
+Testing = "../datasets/abalone9-18/abalone9-18-5-3tst.dat"
+Number of Labels = 5
+Minimum Support = 0.05
+Minimum Confidence = 0.8

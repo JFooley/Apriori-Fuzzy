@@ -1,0 +1,5 @@
+Training = "../datasets/yeast-0-3-5-9_vs_7-8/yeast-0-3-5-9_vs_7-8-5-4tra.dat"
+Testing = "../datasets/yeast-0-3-5-9_vs_7-8/yeast-0-3-5-9_vs_7-8-5-4tst.dat"
+Number of Labels = 5
+Minimum Support = 0.05
+Minimum Confidence = 0.8

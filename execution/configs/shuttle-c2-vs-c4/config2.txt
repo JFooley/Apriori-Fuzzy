@@ -1,0 +1,5 @@
+Training = "../datasets/shuttle-c2-vs-c4/shuttle-c2-vs-c4-5-3tra.dat"
+Testing = "../datasets/shuttle-c2-vs-c4/shuttle-c2-vs-c4-5-3tst.dat"
+Number of Labels = 5
+Minimum Support = 0.05
+Minimum Confidence = 0.8

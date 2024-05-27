@@ -1,0 +1,5 @@
+Training = "../datasets/glass2/glass2-5-5tra.dat"
+Testing = "../datasets/glass2/glass2-5-5tst.dat"
+Number of Labels = 5
+Minimum Support = 0.05
+Minimum Confidence = 0.8
