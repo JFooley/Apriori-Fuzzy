@@ -16,8 +16,8 @@ public class DataSet{
     public String[] inputs = new String[0]; // Lista de quais atributos são entradas
     public String[] outputs = new String[0]; // Lista de quais atributos são saídas 
 
-    public String Data[][]; // Matriz com os valores originais
-    public String outputData[][]; // Matriz com as labels da classe com maior grau de pertinencia
+    public String[][] Data; // Matriz com os valores originais
+    public String[][] outputData; // Matriz com as labels da classe com maior grau de pertinencia
     
     public DataSet(String archivePath, int membershipFunctionSize) {
         this.archive = archivePath;
@@ -111,6 +111,14 @@ public class DataSet{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public String[][] get_data() {
+        return this.outputData;
+    }
+
+    public String[][] get_raw_data() {
+        return this.Data;
     }
 
 }
