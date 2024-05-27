@@ -51,8 +51,8 @@ public class Debug {
 
             // TESTE DA DATASET
             System.out.println("\n\nTeste da classe Data Set");
-            DataSet teste3 = new DataSet("D:/GABRIEL/UEFS/IC/Arquivos/FARC-NEW/datasets/abalone9-18-5-1tra.dat", 5);
-            System.out.println("Criando um dataset do arquivo D:/GABRIEL/UEFS/IC/Arquivos/FARC-NEW/datasets/abalone9-18-5-1tra.dat com tamanho 5\n");
+            DataSet teste3 = new DataSet("execution\\datasets\\cleveland-0_vs_4\\cleveland-0_vs_4-5-1tra.dat", 5);
+            System.out.println("Criando um dataset com tamanho 5\n");
             System.out.println("Label: " + teste3.label);
             System.out.println("Arquivo: " + teste3.archive);
             System.out.println("Tamanho do dataset: " + teste3.lin + " x " + teste3.col);

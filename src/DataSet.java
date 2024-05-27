@@ -94,7 +94,7 @@ public class DataSet{
             this.outputData = new String[this.lin][this.col];
 
             for (int i = 0; i < this.lin; i++) {
-                String[] values = dataBuffer.get(i).split(", ");
+                String[] values = dataBuffer.get(i).split(",\\s*");
                 this.Data[i] = values;
 
             }
