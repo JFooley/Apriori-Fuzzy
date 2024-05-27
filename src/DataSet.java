@@ -40,27 +40,27 @@ public class DataSet{
                     this.label = line.split(" ")[1];
                 }
 
-                else if (line.contains("@inputs") && !dataStart){
-                    String[] parts = line.substring(line.indexOf(" ") + 1).split(", ");
+                else if (line.contains("@input") && !dataStart){
+                    String[] parts = line.substring(line.indexOf(" ") + 1).split(",\\s*");
                     this.inputs = parts;
                 }
 
-                else if (line.contains("@outputs") && !dataStart){
-                    String[] parts = line.substring(line.indexOf(" ") + 1).split(", ");
+                else if (line.contains("@output") && !dataStart){
+                    String[] parts = line.substring(line.indexOf(" ") + 1).split(",\\s*");
                     this.outputs = parts;
                 }
 
                 else if (line.contains("@attribute") && !dataStart){
-                    Pattern patternFuzzy = Pattern.compile("@attribute\\s+(\\w+)\\s+real\\s+\\[([\\d\\.E\\-]+),\\s*([\\d\\.E\\-]+)\\]");
+                    Pattern patternFuzzy = Pattern.compile("@attribute\\s+([\\w-]+)\\s+(real|integer)\\s*\\[([\\d\\.E\\-]+),\\s*([\\d\\.E\\-]+)\\]");
                     Matcher matcherFuzzy = patternFuzzy.matcher(line);
 
-                    Pattern patternClassic = Pattern.compile("@attribute\\s+(\\w+)\\s+\\{([^{}]+)\\}");
+                    Pattern patternClassic = Pattern.compile("@attribute\\s+([\\w-]+)\\s+\\{([^{}]+)\\}");
                     Matcher matcherClassic = patternClassic.matcher(line);
 
                     if (matcherFuzzy.find()) { // Atributo Fuzzy
                         String name = matcherFuzzy.group(1);
-                        double lowerValue = Double.parseDouble(matcherFuzzy.group(2));
-                        double upperValue = Double.parseDouble(matcherFuzzy.group(3));
+                        double lowerValue = Double.parseDouble(matcherFuzzy.group(3));
+                        double upperValue = Double.parseDouble(matcherFuzzy.group(4));
 
                         MemberFunction funcObject = new MemberFunction(name, membershipFunctionSize, upperValue, lowerValue);
                         this.membershipFunctions.add(funcObject);
