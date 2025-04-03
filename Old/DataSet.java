@@ -8,16 +8,17 @@ import java.util.regex.Pattern;
 public class DataSet{
     public String label; // Nome do DataSet
     public String archive; // Path do arquivo
+    public int nClasses;
 
     public int lin = 0, col = 0; // Tamanho do dataset
 
     public ArrayList<MemberFunction> membershipFunctions = new ArrayList<MemberFunction>(); // Lista de funções de pertinencia
+    public ArrayList<String[]> labels = new ArrayList<String[]>(); // Lista de labels 
 
     public String[] inputs = new String[0]; // Lista de quais atributos são entradas
     public String[] outputs = new String[0]; // Lista de quais atributos são saídas 
 
     public String[][] Data; // Matriz com os valores originais
-    public String[][] outputData; // Matriz com as labels da classe com maior grau de pertinencia
     
     public DataSet(String archivePath, int membershipFunctionSize) {
         this.archive = archivePath;
@@ -48,6 +49,8 @@ public class DataSet{
                 else if (line.contains("@output") && !dataStart){
                     String[] parts = line.substring(line.indexOf(" ") + 1).split(",\\s*");
                     this.outputs = parts;
+
+                    this.nClasses = parts.length;
                 }
 
                 else if (line.contains("@attribute") && !dataStart){
@@ -63,7 +66,8 @@ public class DataSet{
                         double upperValue = Double.parseDouble(matcherFuzzy.group(4));
 
                         MemberFunction funcObject = new MemberFunction(name, membershipFunctionSize, upperValue, lowerValue);
-                        this.membershipFunctions.add(funcObject);
+                        this.membershipFunctions.add(funcObject); // Não está garantindo a ordem
+                        this.labels.add(funcObject.labels);
                     }
 
                     else if (matcherClassic.find()) { // Atributo Classico
@@ -72,6 +76,7 @@ public class DataSet{
 
                         MemberFunction funcObject = new MemberFunction(name, values);
                         this.membershipFunctions.add(funcObject);
+                        this.labels.add(funcObject.labels);
                     }
 
                     else {
@@ -91,7 +96,6 @@ public class DataSet{
             this.lin = dataBuffer.size();
             this.col = inputs.length + outputs.length;
             this.Data = new String[this.lin][this.col];
-            this.outputData = new String[this.lin][this.col];
 
             for (int i = 0; i < this.lin; i++) {
                 String[] values = dataBuffer.get(i).split(",\\s*");
@@ -99,14 +103,6 @@ public class DataSet{
 
             }
 
-            // Gera a matriz fuzzyficada
-            for (int i_lin = 0; i_lin < this.lin; i_lin++) {
-                for (int j_col = 0; j_col < this.col; j_col++) { 
-                    String outRegion = this.membershipFunctions.get(j_col).getClass(this.Data[i_lin][j_col]); // Escolhe a função de pertinencia especifica daquele atributo e calcula qual região ele pertence
-                    this.outputData[i_lin][j_col] = outRegion;
-                }
-            }
-            
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -114,10 +110,6 @@ public class DataSet{
     }
 
     public String[][] get_data() {
-        return this.outputData;
-    }
-
-    public String[][] get_raw_data() {
         return this.Data;
     }
 

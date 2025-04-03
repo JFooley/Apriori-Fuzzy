@@ -1,21 +1,18 @@
-public class Fuzzy implements Logic{
+public class Region {
   double x0, x1, x3, y = 1.0;
   String name;
 
-  public Fuzzy() {
-  }
+  public Region() {
+  };
 
-  public Fuzzy(String name, double x0, double x1, double x3) {
+  public Region(String name, double x0, double x1, double x3) {
     this.name = name;
     this.x0 = x0;
     this.x1 = x1;
     this.x3 = x3;
   }
 
-  @Override
-  public double Fuzzifica(String strX) {
-    Double X = Double.parseDouble(strX);
-
+  public double fuzzify(double X) {
     if (X == x1) { 
       return (1.0); 
     }
@@ -36,8 +33,8 @@ public class Fuzzy implements Logic{
 
   }
 
-  public Fuzzy clone(){
-    Fuzzy d = new Fuzzy();
+  public Region clone(){
+    Region d = new Region();
     d.x0 = this.x0;
     d.x1 = this.x1;
     d.x3 = this.x3;
@@ -47,7 +44,6 @@ public class Fuzzy implements Logic{
     return d;
   }
 
-  @Override
   public String getName(){
 	  return (this.name);
   }

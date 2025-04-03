@@ -1,5 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class Algorithm {
+
     public static void run(String config_name, String dataset_tra, String dataset_tst, int labels_size, double min_sup, double min_confidence) {       
+        long startTime, totalTime, startTimeApriori, totalTimeApriori, totalTimeConstruction, startTimeEvTest, totalTimeEvTest;
+
+        startTime = System.currentTimeMillis();
+        
         // Debug debug = new Debug();
         // debug.run_tests();
 
@@ -12,7 +21,7 @@ public class Algorithm {
         System.out.println("Train: " + dataset_tra + " Teste: " + dataset_tst);
         System.out.println("Label size: " + labels_size + " Min_sup: " + min_sup + " Min_confidence: " + min_confidence);
         
-        DataSet dataset = new DataSet(dataset_tra, labels_size);
+        DataSet2 dataset = new DataSet2(dataset_tra, labels_size);
 
         System.out.println("Name: " + dataset.label);
         System.out.println("Arquivo: " + dataset.archive);
@@ -34,11 +43,31 @@ public class Algorithm {
             System.out.print("\n");
         }
         
-
         // Executa o apriori para gerar as regras de associação
+        startTimeApriori = System.currentTimeMillis();
+
+        Apriori apriori = new Apriori(dataset, min_confidence, min_sup);
+        apriori.generateRB();
+        
+        List<ItemSet> frequentItemsets = apriori.frequentItemsets;
+        List<Regra> ruleBase = apriori.regras;
+
+        System.out.println("Itens frequentes: \n");
+        for (ItemSet itemset : frequentItemsets) {
+            System.out.println(itemset.itemset);
+        }
+
+        System.out.println("Regras geradas: \n");
+        for (Regra regra : ruleBase) {
+            System.out.println(regra.toString());
+        }
+
+        totalTimeApriori = System.currentTimeMillis();
 
         // Utiliza o algorítimo genético para pegar a melhor a base de regras gerada
 
         // Faz o processo de inferencia usando a base de regras
+
+        totalTime = System.currentTimeMillis();
     }    
 }

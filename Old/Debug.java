@@ -13,7 +13,7 @@ public class Debug {
             System.out.println("De 10 a 35 com 5 labels\n");
     
             for (int i = 0; i < teste.size; i++){
-                Fuzzy fuzzyObject = (Fuzzy) teste.regions[i];
+                Region fuzzyObject = (Region) teste.regions[i];
                 System.out.println(("Label: " + fuzzyObject.getName()));
                 System.out.println(("x0: " + fuzzyObject.x0));
                 System.out.println(("x1: " + fuzzyObject.x1));
@@ -51,7 +51,7 @@ public class Debug {
 
             // TESTE DA DATASET
             System.out.println("\n\nTeste da classe Data Set");
-            DataSet teste3 = new DataSet("D:\\GABRIEL\\UEFS\\IC\\Arquivos\\FARC-NEW\\execution\\datasets\\abalone9-18\\abalone9-18-5-1tra.dat", 5);
+            DataSet2 teste3 = new DataSet2("D:\\GABRIEL\\UEFS\\IC\\Arquivos\\FARC-NEW\\execution\\datasets\\abalone9-18\\abalone9-18-5-1tra.dat", 5);
 
             System.out.println("Criando um dataset com tamanho 5\n");
             System.out.println("Label: " + teste3.label);
