@@ -5,14 +5,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DataSet{
+public class DataSet1{
     public String label; // Nome do DataSet
     public String archive; // Path do arquivo
     public int nClasses;
 
     public int lin = 0, col = 0; // Tamanho do dataset
 
-    public ArrayList<MemberFunction> membershipFunctions = new ArrayList<MemberFunction>(); // Lista de funções de pertinencia
+    public ArrayList<MemberFunction1> membershipFunctions = new ArrayList<MemberFunction1>(); // Lista de funções de pertinencia
     public ArrayList<String[]> labels = new ArrayList<String[]>(); // Lista de labels 
 
     public String[] inputs = new String[0]; // Lista de quais atributos são entradas
@@ -65,7 +65,7 @@ public class DataSet{
                         double lowerValue = Double.parseDouble(matcherFuzzy.group(3));
                         double upperValue = Double.parseDouble(matcherFuzzy.group(4));
 
-                        MemberFunction funcObject = new MemberFunction(name, membershipFunctionSize, upperValue, lowerValue);
+                        MemberFunction1 funcObject = new MemberFunction1(name, membershipFunctionSize, upperValue, lowerValue);
                         this.membershipFunctions.add(funcObject); // Não está garantindo a ordem
                         this.labels.add(funcObject.labels);
                     }
@@ -74,7 +74,7 @@ public class DataSet{
                         String name = matcherClassic.group(1);
                         String[] values = matcherClassic.group(2).split("\\s*,\\s*");;
 
-                        MemberFunction funcObject = new MemberFunction(name, values);
+                        MemberFunction1 funcObject = new MemberFunction1(name, values);
                         this.membershipFunctions.add(funcObject);
                         this.labels.add(funcObject.labels);
                     }

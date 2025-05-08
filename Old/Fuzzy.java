@@ -1,3 +1,5 @@
+import src.Region;
+
 public class Fuzzy implements Logic{
   double x0, x1, x3, y = 1.0;
   String name;

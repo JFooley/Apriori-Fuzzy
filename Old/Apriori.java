@@ -1,5 +1,7 @@
 import java.util.*;
 
+import src.ItemSet;
+
 public class Apriori {
 
     private String[][] Data;

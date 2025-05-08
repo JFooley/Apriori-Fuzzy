@@ -1,3 +1,4 @@
+package src;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -5,26 +6,47 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataSet {
+    public Config config = new Config();
+    public boolean is_training = false;
 
-    // Estruturas para armazenar informações dos atributos
-    private Map<Integer, Integer> attributeLabelCounts = new HashMap<>(); // Quantidade de labels por atributo
-    private Map<Integer, List<String>> attributeLabels = new HashMap<>(); // Nomes das labels por atributo
-    private Map<Integer, Double[]> attributeLimits = new HashMap<>(); // Limites numérico das labels
+    public Map<Integer, Integer> attributeLabelCounts = new HashMap<>(); // Quantidade de labels por atributo
+    public Map<Integer, List<String>> attributeLabels = new HashMap<>(); // Nomes das labels por atributo
+    public Map<Integer, DoublePair> attributeLimits = new HashMap<>(); // Limites numérico das labels
 
-    private List<String[]> attributeNames = new ArrayList<>(); // Nomes dos atributos
+    public List<String[]> attributeNames = new ArrayList<>(); // Nomes dos atributos (nome, tipo)
 
-    private List<String[]> rawData = new ArrayList<>(); // Transações
-    private List<String[]> data = new ArrayList<>(); // Transações
+    public List<String[]> rawData = new ArrayList<>(); // Transações
+    public List<String[]> data = new ArrayList<>(); // Transações tratadas
 
-    private List<String> inputAttributes = new ArrayList<>(); // Lista de atributos de entrada
-    private List<String> outputAttributes = new ArrayList<>(); // Lista de atributos de saída
+    public List<String> inputAttributes = new ArrayList<>(); // Lista de atributos de entrada
+    public List<String> outputAttributes = new ArrayList<>(); // Lista de atributos de saída
 
-    // Constantes
-    private int default_atribute_size = 5; // Quantidade padrão de labels para atributos não nominais
+    // Definições de configuração
+    public String filePath;
+    public String configPath;
 
-    public DataSet(String filePath, int default_atribute_size) {
-        this.default_atribute_size = default_atribute_size;
-        readARFF(filePath);
+    public DataSet(String config_path, boolean is_training) {
+        this.config = new Config(config_path);
+        this.is_training = is_training;
+
+        if (this.is_training) this.filePath = this.config.training_dataset_path;
+        else this.filePath = this.config.testing_dataset_path;
+
+        this.configPath = this.config.file_path;
+
+        readARFF(this.filePath);
+    }
+
+    public DataSet(Config conf, boolean is_training) {
+        this.config = conf;
+        this.is_training = is_training;
+
+        if (this.is_training) this.filePath = this.config.training_dataset_path;
+        else this.filePath = this.config.testing_dataset_path;
+        
+        this.configPath = this.config.file_path;
+
+        readARFF(this.filePath);
     }
 
     // Método para ler o arquivo ARFF
@@ -123,7 +145,7 @@ public class DataSet {
         attributeLabelCounts.put(index, nominalValues.length);
 
         // Armazenar os limites
-        attributeLimits.put(index, new Double[] { 0d, (double) nominalValues.length-1});
+        attributeLimits.put(index, new DoublePair(0d, nominalValues.length-1));
 
         // Armazenar nomes das labels
         List<String> labels = new ArrayList<>();
@@ -142,16 +164,16 @@ public class DataSet {
             double upperLimit = Double.parseDouble(matcher.group(2));
 
             // Armazenar os limites
-            attributeLimits.put(index, new Double[] { lowerLimit, upperLimit });
+            attributeLimits.put(index, new DoublePair(lowerLimit, upperLimit));
         }
 
         // Definir quantidade padrão de labels
-        attributeLabelCounts.put(index, default_atribute_size);
+        attributeLabelCounts.put(index, this.config.default_label_size);
 
         // Criar labels no formato L_0, L_1, ..., L_(default_atribute_size-1)
         List<String> labels = new ArrayList<>();
-        for (int i = 0; i < default_atribute_size; i++) {
-            labels.add("L_" + i + "/" + default_atribute_size);
+        for (int i = 0; i < this.config.default_label_size; i++) {
+            labels.add("L_" + (i + 1) + "/" + this.config.default_label_size);
         }
         attributeLabels.put(index, labels);
     }
@@ -165,7 +187,7 @@ public class DataSet {
         return attributeLabelCounts;
     }
 
-    public Map<Integer, Double[]> getAttributeLimits() {
+    public Map<Integer, DoublePair> getAttributeLimits() {
         return attributeLimits;
     }
 
@@ -189,45 +211,4 @@ public class DataSet {
         return rawData;
     }
 
-    // Exemplo de uso
-    public static void main(String[] args) {
-        DataSet reader = new DataSet("execution/datasets/abalone9-18/abalone9-18-5-1tra.dat", 3);
-
-        System.out.println("Nomes dos atributos: ");
-        for (String[] name : reader.getAttributeNames()) {
-            System.out.print(name[0] + ", ");
-        }
-        System.out.print("\n");
-        
-        System.out.println("Quantidade de labels por atributo: " + reader.getAttributeLabelCounts());
-
-        System.out.println("Limites das labels por atributo: ");
-        for (Map.Entry<Integer, Double[]> entrada : reader.getAttributeLimits().entrySet()) {
-            System.out.println(entrada.getKey() + " - " + entrada.getValue()[0] + "/" + entrada.getValue()[1]);
-        }
-        System.out.println("Labels dos atributos: ");
-        for (Map.Entry<Integer, List<String>> entrada : reader.getAttributeLabels().entrySet()) {
-            System.out.println(entrada.getKey() + " - " + entrada.getValue().toString());
-        }
-        System.out.println("Inputs: " + reader.getInputAttributes());
-        System.out.println("Outputs: " + reader.getOutputAttributes());
-
-        System.out.println("\nDados RAW: ");
-        for (Integer j = 0; j < 10; j++) {
-            String[] line = reader.getRawData().get(j);
-            for (int i = 0; i < reader.attributeNames.size(); i++) {
-                System.out.print(line[i]+", ");
-            }
-            System.out.print("\n");
-        }
-
-        System.out.println("\nDados tratados: ");
-        for (Integer j = 0; j < 10; j++) {
-            String[] line = reader.getData().get(j);
-            for (int i = 0; i < reader.attributeNames.size(); i++) {
-                System.out.print(line[i]+", ");
-            }
-            System.out.print("\n");
-        }
-    }
 }

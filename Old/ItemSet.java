@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import src.ItemSet;
+
 public class ItemSet {
     ArrayList<String> itemset;
     int classe;

@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import src.ItemSet;
+
 public class Algorithm {
 
     public static void run(String config_name, String dataset_tra, String dataset_tst, int labels_size, double min_sup, double min_confidence) {       

@@ -1,11 +1,13 @@
-public class MemberFunction {
+import src.Region;
+
+public class MemberFunction1 {
   String name;
   Logic[] regions; // Contem todas as regiões (seja fuzzy ou classica) da função de pertinencia
   String[] labels; // Contem todas as labels
   int size = 0;
 
   // Cria uma função de pertinencia pra logica fuzzy
-  public MemberFunction(String name, int membershipFunctionSize, double upperLimit, double lowerLimit) {
+  public MemberFunction1(String name, int membershipFunctionSize, double upperLimit, double lowerLimit) {
     this.size = membershipFunctionSize;
     this.name = name;
 
@@ -28,7 +30,7 @@ public class MemberFunction {
   }
 
   // Cria uma função de pertinencia pra logica classica
-  public MemberFunction(String name, String[] values) {
+  public MemberFunction1(String name, String[] values) {
     this.size = values.length;
     this.name = name;
 
