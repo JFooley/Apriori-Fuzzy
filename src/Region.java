@@ -26,16 +26,6 @@ public class Region {
     this.shape = Region.TRAPEZOIDAL;
   }
 
-  private Region(int label, double x0, double x1, double x2, double x3, int shape, double y) { // Clone
-    this.label = label;
-    this.x0 = x0;
-    this.x1 = x1;
-    this.x2 = x2;
-    this.x3 = x3;
-    this.shape = shape;
-    this.y = y;
-  }
-
   // Retorna o grau de pertinencia de um valor nessa função
   public double fuzzify(double X) {
     if (X >= x1 && X <= x2) {
@@ -55,5 +45,15 @@ public class Region {
 
   public Region clone() {
     return new Region(this.label, this.x0, this.x1, this.x2, this.x3, this.shape, this.y);
+  }
+  
+  private Region(int label, double x0, double x1, double x2, double x3, int shape, double y) { // Clone
+    this.label = label;
+    this.x0 = x0;
+    this.x1 = x1;
+    this.x2 = x2;
+    this.x3 = x3;
+    this.shape = shape;
+    this.y = y;
   }
 }

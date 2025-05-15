@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import src.Apriori;
 import src.ItemSet;
 
 public class Algorithm {

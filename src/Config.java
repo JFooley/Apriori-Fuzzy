@@ -2,20 +2,18 @@ package src;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Config {
+public final class Config {
     public String file_path = "";
     public String training_dataset_path = "";
     public String testing_dataset_path = "";
 
     public Integer default_label_size = 3;
     public Integer default_label_shape = 0; // 0 = triangular, 1 = trapezoidal
-    public Map<String, List<Integer>> attributes = new HashMap<>(); // atributo => {label size, shape}
+    public Map<String, Pair> attributes = new HashMap<>(); // name : {label_size, shape}
 
     public double min_support;
     public double min_confidence;
@@ -69,9 +67,7 @@ public class Config {
 
                     switch (str_line[1]) {
                         case "Triangular" -> this.default_label_shape = 0;
-                            
                         case "Trapezoidal" -> this.default_label_shape = 1;
-                            
                         default -> this.default_label_shape = 0;
                     }
                 }
@@ -85,11 +81,9 @@ public class Config {
                     String shape = str_line[2];
 
                     switch (shape) {
-                        case "Triangular" -> this.attributes.put(name, new ArrayList<>(List.of(size, 0)));
-
-                        case "Trapezoidal" -> this.attributes.put(name, new ArrayList<>(List.of(size, 1)));
-
-                        default -> this.attributes.put(name, new ArrayList<>(List.of(size, 0)));
+                        case "Triangular" -> this.attributes.put(name, new Pair(size, 0));
+                        case "Trapezoidal" -> this.attributes.put(name, new Pair(size, 1));
+                        default -> this.attributes.put(name, new Pair(size, 0));
                     }
                 }
             }

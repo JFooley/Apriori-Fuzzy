@@ -4,4 +4,4 @@ Minimum Support = 0.05
 Minimum Confidence = 0.8
 
 Default Attribute = 3 Triangular
-Attribute = Length 5 Triangular
+Attribute = Length 5 Trapezoidal

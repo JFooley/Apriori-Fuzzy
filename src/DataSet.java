@@ -12,6 +12,7 @@ public class DataSet {
     public Map<Integer, Integer> attributeLabelCounts = new HashMap<>(); // Quantidade de labels por atributo
     public Map<Integer, List<String>> attributeLabels = new HashMap<>(); // Nomes das labels por atributo
     public Map<Integer, DoublePair> attributeLimits = new HashMap<>(); // Limites numérico das labels
+    public Map<Integer, MembershipFunction> msfunctions = new HashMap<>(); // Funções de pertinencia dos atributos
 
     public List<String[]> attributeNames = new ArrayList<>(); // Nomes dos atributos (nome, tipo)
 
@@ -128,21 +129,28 @@ public class DataSet {
         // Processar atributos nominais
         if (attributeType.startsWith("{")) {
             attributeNames.add(new String[] {attributeName, "Nominal"});
-            processNominalAttribute(attributeNames.size() - 1, attributeType);
+            processNominalAttribute(attributeName, attributeNames.size() - 1, attributeType);
             
         } else {
             attributeNames.add(new String[] {attributeName, "Numeric"});
-            processNumericAttribute(attributeNames.size() - 1, attributeType);
+            processNumericAttribute(attributeName, attributeNames.size() - 1, attributeType);
         }
     }
 
     // Método para processar atributos nominais
-    private void processNominalAttribute(Integer index, String attributeType) {
+    private void processNominalAttribute(String name, Integer index, String attributeType) {
         // Extrair valores nominais
         String[] nominalValues = attributeType.replace("{", "").replace("}", "").split(",");
 
         // Armazenar quantidade de labels
         attributeLabelCounts.put(index, nominalValues.length);
+
+        // Verifica se há configuração específica para essa variable
+        int att_shape;
+        var att_config = config.attributes.get(name);
+
+        if (att_config != null) att_shape = att_config.y();
+        else att_shape = config.default_label_shape;
 
         // Armazenar os limites
         attributeLimits.put(index, new DoublePair(0d, nominalValues.length-1));
@@ -153,29 +161,54 @@ public class DataSet {
             labels.add(value.trim());
         }
         attributeLabels.put(index, labels);
+
+        MembershipFunction ms = new MembershipFunction(name, index, labels.size(), new DoublePair(0d, nominalValues.length-1), att_shape);
+        msfunctions.put(index, ms);
     }
 
     // Método para processar atributos não nominais
-    private void processNumericAttribute(Integer index, String attributeType) {
+    private void processNumericAttribute(String name, Integer index, String attributeType) {
         Pattern pattern = Pattern.compile("\\[([\\d\\.E\\-]+),\\s*([\\d\\.E\\-]+)\\]");
         Matcher matcher = pattern.matcher(attributeType);
+        
+        double lowerLimit, upperLimit;
         if (matcher.find()) {
-            double lowerLimit = Double.parseDouble(matcher.group(1));
-            double upperLimit = Double.parseDouble(matcher.group(2));
-
-            // Armazenar os limites
-            attributeLimits.put(index, new DoublePair(lowerLimit, upperLimit));
+            lowerLimit = Double.parseDouble(matcher.group(1));
+            upperLimit = Double.parseDouble(matcher.group(2));
+        } else {
+            lowerLimit = 0;
+            upperLimit = 0;
         }
+
+        // Verifica se há configuração específica para essa variable
+        int att_shape, att_size;
+        var att_config = config.attributes.get(name);
+
+        if (att_config != null) {
+            att_size = att_config.x();
+            att_shape = att_config.y();
+        } else {
+            att_size = config.default_label_size;
+            att_shape = config.default_label_shape;
+        }
+
+        // Armazenar os limites
+        DoublePair limits = new DoublePair(lowerLimit, upperLimit);
+        attributeLimits.put(index, limits);
 
         // Definir quantidade padrão de labels
-        attributeLabelCounts.put(index, this.config.default_label_size);
+        attributeLabelCounts.put(index, att_size);
 
-        // Criar labels no formato L_0, L_1, ..., L_(default_atribute_size-1)
+        // Criar labels no formato L_0, L_1, ..., L_(atribute_size-1)
         List<String> labels = new ArrayList<>();
-        for (int i = 0; i < this.config.default_label_size; i++) {
-            labels.add("L_" + (i + 1) + "/" + this.config.default_label_size);
+        for (int i = 0; i < att_size; i++) {
+            labels.add("L_" + (i + 1) + "/" + att_size);
         }
         attributeLabels.put(index, labels);
+        
+        // Cria a função de pertinencia do atributo
+        MembershipFunction ms = new MembershipFunction(name, index, labels.size(), limits, att_shape);
+        msfunctions.put(index, ms);
     }
 
     // Métodos para acessar as informações
