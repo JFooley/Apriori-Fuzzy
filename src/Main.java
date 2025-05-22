@@ -60,5 +60,16 @@ public class Main {
             System.out.println("x0: " + label.x0 + ", x1: " + label.x1 + ", x2: " + label.x2 + ", x3: " + label.x3);
         }
 
+        Apriori apriori = new Apriori(reader);
+        apriori.generateRuleBase();
+        
+        System.out.println("Apriori Fuzzy");
+        System.out.println("L2 size: " + apriori.rule_base.rules.size());
+        System.out.println("L2: ");
+        for (ItemSet itemset : apriori.rule_base.rules) {
+            System.out.println(itemset.toString());
+        }
+        
+
     }
 }

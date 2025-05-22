@@ -18,6 +18,8 @@ public final class Config {
     public double min_support;
     public double min_confidence;
 
+    public Integer depth;
+
     public Config() {}
 
     public Config(String file) {
@@ -57,6 +59,12 @@ public final class Config {
                     } else if (str_line[0].equals("Minimum Confidence")) {
                         this.min_confidence = Double.parseDouble(str_line[1]);
                     }
+                }
+
+                // Apriori Depth
+                if (line.startsWith("Depth")) {
+                    String[] str_line = line.split("\\s*=\\s*");
+                    this.depth = Integer.parseInt(str_line[1].replace("\"", ""));
                 }
 
                 // Default size and shape

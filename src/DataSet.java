@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class DataSet {
     public Config config = new Config();
-    public boolean is_training = false;
+    public boolean is_training = true;
 
     public Map<Integer, Integer> attributeLabelCounts = new HashMap<>(); // Quantidade de labels por atributo
     public Map<Integer, List<String>> attributeLabels = new HashMap<>(); // Nomes das labels por atributo
@@ -244,4 +244,7 @@ public class DataSet {
         return rawData;
     }
 
+    public Integer getTransOutput(int trans_index) {
+        return Integer.valueOf(this.data.get(trans_index)[this.inputAttributes.size()]);
+    }
 }
