@@ -18,4 +18,10 @@ public class RuleBase {
     public void addRules(RuleBase rule_base) {
         this.rules.addAll(rule_base.rules);
     }
+
+    public void printRules() {
+        for (ItemSet itemset : this.rules) {
+            System.out.println(itemset.toString());
+        }
+    }
 }

@@ -13,6 +13,7 @@ public class DataSet {
     public Map<Integer, List<String>> attributeLabels = new HashMap<>(); // Nomes das labels por atributo
     public Map<Integer, DoublePair> attributeLimits = new HashMap<>(); // Limites numérico das labels
     public Map<Integer, MembershipFunction> msfunctions = new HashMap<>(); // Funções de pertinencia dos atributos
+    public Map<Integer, Float> classFrequency = new HashMap<>(); // Frequencia normalizada de cada classe no database
 
     public List<String[]> attributeNames = new ArrayList<>(); // Nomes dos atributos (nome, tipo)
 
@@ -105,15 +106,13 @@ public class DataSet {
         }
 
         // Tratar os dados
-        for (Integer i = 0; i < attributeNames.size(); i++) {
-            if (attributeNames.get(i)[1] == "Nominal") { // verifica se o atributo é nominal
-                for (String[] line : data) {
-                    // Busca a lista de labels do atributo e substitui a linha pelo indice da label daquela linha ex: {M, F, I} o M na transação se torna 0
-                    line[i] = Integer.toString(attributeLabels.get(i).indexOf(line[i]));
-                }
-            }
+        for (var line : data) {
+            for (Integer i = 0; i < attributeNames.size(); i++)
+                if (attributeNames.get(i)[1].equals("Nominal")) // verifica se o atributo é nominal
+                    line[i] = Integer.toString(attributeLabels.get(i).indexOf(line[i])); // Busca a lista de labels do atributo e substitui a linha pelo indice da label daquela linha ex: {M, F, I} o M na transação se torna 0
+    
+            this.classFrequency.put(Integer.valueOf(line[line.length - 1]), classFrequency.getOrDefault(Integer.valueOf(line[line.length - 1]), 0f) + (1f / data.size()));            
         }
-
     }
 
     // Método para processar uma linha de atributo

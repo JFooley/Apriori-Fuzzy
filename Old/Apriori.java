@@ -131,6 +131,7 @@ public class Apriori {
         for (i = LK.size() - 1; i >= 0; i--) {
             itemset = LK.get(i);
             System.out.println("Itemset: " + itemset.toString() + " Support: " + itemset.support);
+            
             if (itemset.support > 0.0) {
                 confidence = itemset.class_support / itemset.support;
                 lift = itemset.class_support / (itemset.support * this.dataSet.getClassFrequency(classe));
@@ -150,5 +151,18 @@ public class Apriori {
         }
 
         // Falta o reduce 
+    }
+
+    private boolean isCombinable(ItemSet itemseti, ItemSet itemsetj) {
+        int i;
+        Item itemi, itemj;
+        ItemSet itemset;
+
+        itemi = itemseti.get(itemseti.size() - 1);
+        itemj = itemsetj.get(itemseti.size() - 1);
+        if (itemi.getVariable() >= itemj.getVariable())
+            return (false);
+
+        return (true);
     }
 }

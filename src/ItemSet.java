@@ -3,9 +3,16 @@ import java.util.*;
 
 public class ItemSet {
     // Pair = (attribute, label)
-    Set<Pair> itemset = new HashSet<>();
+    List<Pair> itemset = new ArrayList<>();
     int class_index;
-    double dataset_support, class_support;
+    double dataset_support, class_support, lift;
+
+    private ItemSet(ItemSet is) {
+        this.itemset = is.itemset;
+        this.class_index = is.class_index;
+        this.dataset_support = is.dataset_support;
+        this.class_support = is.class_support;
+    }
 
     public ItemSet(int classe) {
         this.class_index = classe;
@@ -46,6 +53,18 @@ public class ItemSet {
 
     public void add(Pair item) {
         this.itemset.add(item);
+    }
+
+    public Pair get(int index) {
+        return itemset.get(index);
+    }
+
+    public int size() {
+        return itemset.size();
+    }
+
+    public ItemSet clone() {
+        return new ItemSet(this);
     }
 
     @Override

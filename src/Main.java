@@ -52,7 +52,7 @@ public class Main {
             System.out.print("\n");
         }
         
-       var ms = reader.msfunctions.get(1);
+        var ms = reader.msfunctions.get(1);
         System.out.println("\nVariable: " + ms.atribute_name + " - Index: " + ms.atribute_index);
         for (Region label : ms.regions) {
             System.out.println("");
@@ -64,12 +64,10 @@ public class Main {
         apriori.generateRuleBase();
         
         System.out.println("Apriori Fuzzy");
-        System.out.println("L2 size: " + apriori.rule_base.rules.size());
-        System.out.println("L2: ");
-        for (ItemSet itemset : apriori.rule_base.rules) {
-            System.out.println(itemset.toString());
-        }
+        System.out.println("Rules: ");
+        apriori.rule_base.printRules();
         
+        // RESOLVER PROBLEMA DAS REGRAS ESTAREM SUMINDO
 
     }
 }
