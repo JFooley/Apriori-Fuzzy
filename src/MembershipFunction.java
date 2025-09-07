@@ -7,7 +7,6 @@ public class MembershipFunction {
     DoublePair atr_limits;
 
     public MembershipFunction(DataSet data, int var_index, int shape) {
-        // Faster construtor  
         this(data.getAttributeNames().get(var_index)[0], var_index, data.getAttributeLabelCounts().get(var_index), data.attributeLimits.get(var_index), shape);
     };
 

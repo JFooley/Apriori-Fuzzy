@@ -148,7 +148,7 @@ public class DataSet {
         int att_shape;
         var att_config = config.attributes.get(name);
 
-        if (att_config != null) att_shape = att_config.y();
+        if (att_config != null) att_shape = att_config.label();
         else att_shape = config.default_label_shape;
 
         // Armazenar os limites
@@ -184,8 +184,8 @@ public class DataSet {
         var att_config = config.attributes.get(name);
 
         if (att_config != null) {
-            att_size = att_config.x();
-            att_shape = att_config.y();
+            att_size = att_config.variable();
+            att_shape = att_config.label();
         } else {
             att_size = config.default_label_size;
             att_shape = config.default_label_shape;

@@ -2,7 +2,6 @@ package src;
 import java.util.*;
 
 public class ItemSet {
-    // Pair = (attribute, label)
     List<Item> itemset = new ArrayList<>();
     int class_index;
     double dataset_support, class_support, lift;
@@ -20,6 +19,7 @@ public class ItemSet {
         this.class_support = 0;
     }
 
+    // Calcula o suporte do itemset no dataset e na classe especificada dele
     public void getSupport(DataSet dataset, Map<Item, double[]> membership_cache) {
         this.dataset_support = 0f;
         this.class_support = 0f;
@@ -40,6 +40,7 @@ public class ItemSet {
         this.class_support /= dataset.data.size();
     }
 
+    // Calcula o grau de pertinência do itemset na transação especificada
     public double matchDegree(int transactionIndex, DataSet dataset, Map<Item, double[]> membership_cache) { 
         double degree = 1f;
         int n_ants = 0;
@@ -55,7 +56,7 @@ public class ItemSet {
 
             } else { 
                 // Calcula o grau de pertinência da label
-                Double value = dataset.msfunctions.get(ant.x()).regions[ant.y()].fuzzify(Double.parseDouble(transaction[ant.x()])); // Item = (variable, label)
+                Double value = dataset.msfunctions.get(ant.variable()).regions[ant.label()].fuzzify(Double.parseDouble(transaction[ant.variable()])); // Item = (variable, label)
                 degree *= value;
                 n_ants++;
 
@@ -65,11 +66,13 @@ public class ItemSet {
             }
         }
 
-        degree = Math.pow(degree, (double) 1/n_ants); // Faz a média geométrica
+        // Calcula a media geométrica dos graus de pertinência
+        if (n_ants > 0) degree = Math.pow(degree, (double) 1/n_ants);
 
         return degree;
     }
 
+    // Metodos auxiiliares
     public void add(Item item) {
         this.itemset.add(item);
     }
@@ -95,7 +98,7 @@ public class ItemSet {
     public String toString() {
         String str = "";
         for (Item pair : itemset) {
-            str += "(" + pair.x() + ", " + pair.y() + ") ";
+            str += "(" + pair.variable() + ", " + pair.label() + ") ";
         }
         str += "-> " + this.class_index;
         return str;

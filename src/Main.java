@@ -12,7 +12,7 @@ public class Main {
         System.out.println("\nLabels configs: ");
         System.out.println("Default - Size: " + reader.config.default_label_size + " Shape: " + reader.config.default_label_shape);
         for (Map.Entry<String, Item> entry: reader.config.attributes.entrySet()) {
-            System.out.println(entry.getKey() + " - Size: " + entry.getValue().x() + " Shape: " + entry.getValue().y());
+            System.out.println(entry.getKey() + " - Size: " + entry.getValue().variable() + " Shape: " + entry.getValue().label());
         }
 
         System.out.println("\nNomes dos atributos: ");

@@ -90,10 +90,10 @@ public class Apriori {
                     // Debug: mostra combinação sendo testada
                     System.out.println("i = " + itemseti.toString());
                     System.out.println("j = " + itemsetj.toString());
-                    System.out.println("Pode combinar? " + (itemseti.get(itemsetj.size() - 1).x() < itemsetj.get(itemsetj.size() - 1).x()));
+                    System.out.println("Pode combinar? " + (itemseti.get(itemsetj.size() - 1).variable() < itemsetj.get(itemsetj.size() - 1).variable()));
                     
                     // Verifica se os itemsets podem ser combinados (critério de ordenação)
-                    if (itemseti.get(itemsetj.size() - 1).x() < itemsetj.get(itemsetj.size() - 1).x()) {
+                    if (itemseti.get(itemsetj.size() - 1).variable() < itemsetj.get(itemsetj.size() - 1).variable()) {
                         // Combina os itemsets criando um novo itemset
                         newItemset = itemseti.clone();
                         newItemset.add(itemsetj.getLast());
