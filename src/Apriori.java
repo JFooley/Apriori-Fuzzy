@@ -9,14 +9,15 @@ public class Apriori {
     public DataSet dataset;          // Conjunto de dados para mineração
     public RuleBase rule_base;       // Base de regras gerada
     
-    public int depth;                // Profundidade máxima das regras
+    public int depth;                // Profundidade máxima das regras (quantidade máxima de antecedentes)
     
-    public Map<Pair, Double> support_cache; // Cache para armazenar suportes calculados
-    public List<ItemSet> L2;                // Conjunto de itemsets frequentes de tamanho 2
+    public List<ItemSet> L2;                        // Conjunto de itemsets frequentes de tamanho 2
+    public Map<Item, double[]> membership_cache;    // Cache de graus de pertinência das labels
 
     public Apriori(DataSet dataset) {
         this.dataset = dataset;
         this.depth = dataset.config.depth;
+        this.membership_cache = new HashMap<>();
     }
     
     // Função principal: gera a base de regras usando Apriori Fuzzy
@@ -24,7 +25,6 @@ public class Apriori {
         RuleBase temp_rule_base;
         
         this.rule_base = new RuleBase(this.dataset);
-        this.support_cache = new HashMap<>();
 
         // Itera sobre todas as labels de classe de output
         for (int class_label_index = 0; class_label_index < this.dataset.attributeLabelCounts.get(this.dataset.inputAttributes.size()); class_label_index++) {
@@ -43,7 +43,7 @@ public class Apriori {
     // Gera itemsets frequentes de tamanho 2 (L2)
     private void generateL2(RuleBase rb, int current_class) {
         int label, attribute;
-        Pair item;
+        Item item;
         ItemSet item_set;
 
         this.L2 = new ArrayList<>();
@@ -52,15 +52,17 @@ public class Apriori {
         for (attribute = 0; attribute < this.dataset.inputAttributes.size(); attribute++) {
             for (label = 0; label < this.dataset.attributeLabelCounts.get(attribute); label++) {
                 // Cria um itemset com um único item (atributo, label)
-                item = new Pair(attribute, label);
+                item = new Item(attribute, label);
                 item_set = new ItemSet(current_class);
                 item_set.add(item);
 
                 // Calcula o suporte do itemset no dataset
-                item_set.getSupport(this.dataset);
+                item_set.getSupport(this.dataset, this.membership_cache);
 
-                // Adiciona ao L2 se atender ao suporte mínimo
-                if (item_set.class_support >= this.dataset.config.min_support) L2.add(item_set);
+                // Adiciona ao L2 se atender ao suporte mínimo relativo à classe
+                if (item_set.class_support >= this.dataset.config.min_support * this.dataset.classFrequency.get(current_class)) {
+                    this.L2.add(item_set);
+                }
             }
         }
 
@@ -94,16 +96,18 @@ public class Apriori {
                     if (itemseti.get(itemsetj.size() - 1).x() < itemsetj.get(itemsetj.size() - 1).x()) {
                         // Combina os itemsets criando um novo itemset
                         newItemset = itemseti.clone();
-                        newItemset.add(itemsetj.get(itemsetj.size() - 1));
-                        newItemset.getSupport(dataset);
-                        
-                        // Adiciona ao novo conjunto se atender ao suporte mínimo
-                        if (newItemset.class_support >= this.dataset.config.min_support) 
-                            Lnew.add(newItemset);
+                        newItemset.add(itemsetj.getLast());
+                        newItemset.getSupport(dataset, this.membership_cache);
 
+                        // Debug: Mostra se o novo itemset atende ao suporte mínimo
                         System.out.println(newItemset.toString());
+                        System.out.println("Suporte: " + newItemset.class_support + " " + (newItemset.class_support >= this.dataset.config.min_support * this.dataset.classFrequency.get(current_class)));
+
+                        // Adiciona ao novo conjunto se atender ao suporte mínimo relativo à classe
+                        if (newItemset.class_support >= this.dataset.config.min_support * this.dataset.classFrequency.get(current_class)) {
+                            Lnew.add(newItemset);
+                        }
                     }
-                    System.out.println("");
                 }
 
                 // Gera regras a partir dos novos itemsets
@@ -136,7 +140,7 @@ public class Apriori {
             if (lift > 1.0) {
                 itemset.lift = lift;
                 rb.addRule(itemset);
-                Lk.remove(i); // Remove o itemset para evitar regras redundantes
+                Lk.remove(i); // Remove o itemset que virou regra para evitar regras redundantes
             }
         }
     }

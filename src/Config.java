@@ -13,7 +13,7 @@ public final class Config {
 
     public Integer default_label_size = 3;
     public Integer default_label_shape = 0; // 0 = triangular, 1 = trapezoidal
-    public Map<String, Pair> attributes = new HashMap<>(); // name : {label_size, shape}
+    public Map<String, Item> attributes = new HashMap<>(); // name : {label_size, shape}
 
     public double min_support;
     public double min_confidence;
@@ -89,9 +89,9 @@ public final class Config {
                     String shape = str_line[2];
 
                     switch (shape) {
-                        case "Triangular" -> this.attributes.put(name, new Pair(size, 0));
-                        case "Trapezoidal" -> this.attributes.put(name, new Pair(size, 1));
-                        default -> this.attributes.put(name, new Pair(size, 0));
+                        case "Triangular" -> this.attributes.put(name, new Item(size, 0));
+                        case "Trapezoidal" -> this.attributes.put(name, new Item(size, 1));
+                        default -> this.attributes.put(name, new Item(size, 0));
                     }
                 }
             }

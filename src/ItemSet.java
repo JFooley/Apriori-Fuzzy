@@ -3,12 +3,12 @@ import java.util.*;
 
 public class ItemSet {
     // Pair = (attribute, label)
-    List<Pair> itemset = new ArrayList<>();
+    List<Item> itemset = new ArrayList<>();
     int class_index;
     double dataset_support, class_support, lift;
 
     private ItemSet(ItemSet is) {
-        this.itemset = is.itemset;
+        this.itemset = new ArrayList<>(is.itemset);
         this.class_index = is.class_index;
         this.dataset_support = is.dataset_support;
         this.class_support = is.class_support;
@@ -20,7 +20,7 @@ public class ItemSet {
         this.class_support = 0;
     }
 
-    public void getSupport(DataSet dataset) {
+    public void getSupport(DataSet dataset, Map<Item, double[]> membership_cache) {
         this.dataset_support = 0f;
         this.class_support = 0f;
         Double degree;
@@ -28,7 +28,7 @@ public class ItemSet {
         // Para cada transação
         for (int i = 0; i < dataset.data.size(); i++) {
             // Calcula o grau de pertinência do itemset na transação especificada
-            degree = this.matchDegree(dataset.data.get(i), dataset);
+            degree = this.matchDegree(i, dataset, membership_cache);
 
             // Adiciona esse grau ao suporte geral e ao suporte de classe, caso seja da classe compatível
             this.dataset_support += degree;
@@ -40,29 +40,53 @@ public class ItemSet {
         this.class_support /= dataset.data.size();
     }
 
-    public double matchDegree(String[] transaction, DataSet dataset) { 
-        double degree = 1.0;
-         
+    public double matchDegree(int transactionIndex, DataSet dataset, Map<Item, double[]> membership_cache) { 
+        double degree = 1f;
+        int n_ants = 0;
+
+        String[] transaction = dataset.data.get(transactionIndex);
+
         // Calcula o grau de pertinência de cada label do itemset na transação
-        for (Pair ant : this.itemset) {
-            degree *= dataset.msfunctions.get(ant.x()).regions[ant.y()].fuzzify(Double.parseDouble(transaction[ant.x()])); // Pair = (variable, label)
+        for (Item ant : this.itemset) {
+            if (membership_cache.containsKey(ant) && membership_cache.get(ant)[transactionIndex] != 0) { 
+                // Recupera do cache a pertinencia calculada da label para a transação
+                degree *= membership_cache.get(ant)[transactionIndex]; 
+                n_ants++;
+
+            } else { 
+                // Calcula o grau de pertinência da label
+                Double value = dataset.msfunctions.get(ant.x()).regions[ant.y()].fuzzify(Double.parseDouble(transaction[ant.x()])); // Item = (variable, label)
+                degree *= value;
+                n_ants++;
+
+                // Salva no cache o valor calculado no cache
+                if (!membership_cache.containsKey(ant)) membership_cache.put(ant, new double[dataset.data.size()]);
+                membership_cache.get(ant)[transactionIndex] = value;
+            }
         }
+
+        degree = Math.pow(degree, (double) 1/n_ants); // Faz a média geométrica
 
         return degree;
     }
 
-    public void add(Pair item) {
+    public void add(Item item) {
         this.itemset.add(item);
     }
 
-    public Pair get(int index) {
+    public Item get(int index) {
         return itemset.get(index);
+    }
+
+    public Item getLast() {
+        return itemset.getLast();
     }
 
     public int size() {
         return itemset.size();
     }
 
+    @Override
     public ItemSet clone() {
         return new ItemSet(this);
     }
@@ -70,7 +94,7 @@ public class ItemSet {
     @Override
     public String toString() {
         String str = "";
-        for (Pair pair : itemset) {
+        for (Item pair : itemset) {
             str += "(" + pair.x() + ", " + pair.y() + ") ";
         }
         str += "-> " + this.class_index;

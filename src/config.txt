@@ -1,6 +1,6 @@
-Training = "D:/GABRIEL/UEFS/IC/Arquivos/Apriori Fuzzy/execution/datasets/abalone9-18/abalone9-18-5-1tra.dat"
-Testing = "D:/GABRIEL/UEFS/IC/Arquivos/Apriori Fuzzy/execution/datasets/abalone9-18/abalone9-18-5-1tst.dat"
-Minimum Support = 0.01
+Training = "D:/GABRIEL/UEFS/IC/Arquivos/Apriori Fuzzy/src/iris.dat"
+Testing = "D:/GABRIEL/UEFS/IC/Arquivos/Apriori Fuzzy/src/iris.dat"
+Minimum Support = 0.05
 Minimum Confidence = 0.8
 Depth = 5
 
