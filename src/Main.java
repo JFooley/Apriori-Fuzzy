@@ -8,6 +8,8 @@ public class Main {
         // Este código é apenas para testar a leitura do dataset e a geração das regras
         // O uso do algoritmo Apriori Fuzzy deve ser feito utilizando a classe Apriori e a classe DataSet
         // A classe main apenas está exemplificando o uso com um dataset de exemplo
+        // O objeto RuleBase gerado contem as regras de associção fuzzy e podem ser exportadas para um arquivo de texto
+        // utilizando o método exportRules da classe RuleBase
     
         DataSet reader = new DataSet("src/exemplo/config.txt", true);
 
