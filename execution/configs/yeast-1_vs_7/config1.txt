@@ -1,5 +1,5 @@
 Training = "../datasets/yeast-1_vs_7/yeast-1_vs_7-5-2tra.dat"
 Testing = "../datasets/yeast-1_vs_7/yeast-1_vs_7-5-2tst.dat"
-Number of Labels = 5
 Minimum Support = 0.05
-Minimum Confidence = 0.8
+Depth = 3
+Default Attribute = 3 Triangular

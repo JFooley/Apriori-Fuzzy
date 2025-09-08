@@ -39,9 +39,9 @@ for subpasta in os.listdir(caminho_pasta_principal):
             with open(os.path.join(caminho_subpasta_novo, f"config{numero - 1}.txt"), 'w') as arquivo_config:
                 arquivo_config.write(f"Training = \"../datasets/{subpasta}/{chave}tra.dat\"\n")
                 arquivo_config.write(f"Testing = \"../datasets/{subpasta}/{chave}tst.dat\"\n")
-                arquivo_config.write("Number of Labels = 5\n")
                 arquivo_config.write("Minimum Support = 0.05\n")
-                arquivo_config.write("Minimum Confidence = 0.8\n")
+                arquivo_config.write("Depth = 3\n")
+                arquivo_config.write("Default Attribute = 3 Triangular\n")
 
 print("Criação finalizada")
 input("Pressione Enter para fechar o programa...")

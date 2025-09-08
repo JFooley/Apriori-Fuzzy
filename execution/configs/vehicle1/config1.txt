@@ -1,5 +1,5 @@
 Training = "../datasets/vehicle1/vehicle1-5-2tra.dat"
 Testing = "../datasets/vehicle1/vehicle1-5-2tst.dat"
-Number of Labels = 5
 Minimum Support = 0.05
-Minimum Confidence = 0.8
+Depth = 3
+Default Attribute = 3 Triangular

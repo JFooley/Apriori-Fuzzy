@@ -1,5 +1,5 @@
 Training = "../datasets/abalone9-18/abalone9-18-5-5tra.dat"
 Testing = "../datasets/abalone9-18/abalone9-18-5-5tst.dat"
-Number of Labels = 5
 Minimum Support = 0.05
-Minimum Confidence = 0.8
+Depth = 3
+Default Attribute = 3 Triangular
