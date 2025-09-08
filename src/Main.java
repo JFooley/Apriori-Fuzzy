@@ -4,8 +4,10 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+
         // Este código é apenas para testar a leitura do dataset e a geração das regras
         // O uso do algoritmo Apriori Fuzzy deve ser feito utilizando a classe Apriori e a classe DataSet
+        // A classe main apenas está exemplificando o uso com um dataset de exemplo
     
         DataSet reader = new DataSet("src/exemplo/config.txt", true);
 

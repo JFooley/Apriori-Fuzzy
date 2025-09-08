@@ -87,21 +87,12 @@ public class Apriori {
                 for (int j = i + 1; j < size; j++) {
                     itemsetj = Lk.get(j);
                     
-                    // Debug: mostra combinação sendo testada
-                    System.out.println("i = " + itemseti.toString());
-                    System.out.println("j = " + itemsetj.toString());
-                    System.out.println("Pode combinar? " + (itemseti.get(itemsetj.size() - 1).variable() < itemsetj.get(itemsetj.size() - 1).variable()));
-                    
                     // Verifica se os itemsets podem ser combinados (critério de ordenação)
                     if (itemseti.get(itemsetj.size() - 1).variable() < itemsetj.get(itemsetj.size() - 1).variable()) {
                         // Combina os itemsets criando um novo itemset
                         newItemset = itemseti.clone();
                         newItemset.add(itemsetj.getLast());
                         newItemset.getSupport(dataset, this.membership_cache);
-
-                        // Debug: Mostra se o novo itemset atende ao suporte mínimo
-                        System.out.println(newItemset.toString());
-                        System.out.println("Suporte: " + newItemset.class_support + " " + (newItemset.class_support >= this.dataset.config.min_support * this.dataset.classFrequency.get(current_class)));
 
                         // Adiciona ao novo conjunto se atender ao suporte mínimo relativo à classe
                         if (newItemset.class_support >= this.dataset.config.min_support * this.dataset.classFrequency.get(current_class)) {
