@@ -4,4 +4,4 @@ Minimum Support = 0.05
 Depth = 5
 
 Default Attribute = 3 Triangular
-Attribute = Length 5 Trapezoidal
+Attribute = SepalLength 5 Trapezoidal
