@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RuleBase {
-    public DataSet data;
+    public DataSet data; // Conjunto de dados e configurações
     public List<ItemSet> rules = new ArrayList<>(); // Regras
 
     public RuleBase(DataSet dataset) {
@@ -21,7 +21,7 @@ public class RuleBase {
 
     public void printRules() {
         for (ItemSet itemset : this.rules) {
-            System.out.println(itemset.toString());
+            System.out.println(itemset.toString(this.data));
         }
     }
 }

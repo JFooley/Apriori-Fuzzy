@@ -103,4 +103,13 @@ public class ItemSet {
         str += "-> " + this.class_index;
         return str;
     }
+
+    public String toString(DataSet dataset) {
+        String str = "SE ";
+        for (Item pair : itemset) {
+            str += dataset.attributeNames.get(pair.variable())[0] + ": " + dataset.attributeLabels.get(pair.variable()).get(pair.label()) + ", ";
+        }
+        str += "ENTÃO " + dataset.attributeNames.get(dataset.attributeNames.size()-1)[0] + ": " + dataset.attributeLabels.get(dataset.attributeNames.size()-1).get(this.class_index);
+        return str;
+    }
 }

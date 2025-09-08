@@ -198,10 +198,10 @@ public class DataSet {
         // Definir quantidade padrão de labels
         attributeLabelCounts.put(index, att_size);
 
-        // Criar labels no formato L_0, L_1, ..., L_(atribute_size-1)
+        // Criar labels no formato 1/N, 2/N, ..., (atribute_size-1)/N
         List<String> labels = new ArrayList<>();
-        for (int i = 0; i < att_size; i++) {
-            labels.add("L_" + (i + 1) + "/" + att_size);
+        for (int i = 1; i <= att_size; i++) {
+            labels.add(i + "/" + att_size);
         }
         attributeLabels.put(index, labels);
         

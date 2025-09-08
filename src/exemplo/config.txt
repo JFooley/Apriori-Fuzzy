@@ -1,0 +1,7 @@
+Training = "src/exemplo/iris.dat"
+Testing = "src/exemplo/iris.dat"
+Minimum Support = 0.05
+Depth = 5
+
+Default Attribute = 3 Triangular
+Attribute = SepalLength 5 Trapezoidal

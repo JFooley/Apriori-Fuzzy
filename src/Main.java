@@ -4,7 +4,10 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        DataSet reader = new DataSet("D:/GABRIEL/UEFS/IC/Arquivos/Apriori Fuzzy/src/config.txt", true);
+        // Este código é apenas para testar a leitura do dataset e a geração das regras
+        // O uso do algoritmo Apriori Fuzzy deve ser feito utilizando a classe Apriori e a classe DataSet
+    
+        DataSet reader = new DataSet("src/exemplo/config.txt", true);
 
         System.out.println("Configuração");
         System.out.println("Path: " + reader.config.file_path + " Train Path: " + reader.config.training_dataset_path + " Test Path: " + reader.config.testing_dataset_path);
@@ -66,8 +69,6 @@ public class Main {
         System.out.println("Apriori Fuzzy");
         System.out.println("Rules: ");
         apriori.rule_base.printRules();
-        
-        // RESOLVER PROBLEMA DAS REGRAS ESTAREM SUMINDO
-
+    
     }
 }

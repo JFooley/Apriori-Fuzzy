@@ -1,7 +1,0 @@
-Training = "D:/GABRIEL/UEFS/IC/Arquivos/Apriori Fuzzy/src/iris.dat"
-Testing = "D:/GABRIEL/UEFS/IC/Arquivos/Apriori Fuzzy/src/iris.dat"
-Minimum Support = 0.05
-Depth = 5
-
-Default Attribute = 3 Triangular
-Attribute = SepalLength 5 Trapezoidal
