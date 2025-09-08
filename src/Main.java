@@ -71,6 +71,6 @@ public class Main {
         System.out.println("Apriori Fuzzy");
         System.out.println("Rules: ");
         apriori.rule_base.printRules();
-    
+        apriori.rule_base.exportRules("src/exemplo/output.txt");
     }
 }

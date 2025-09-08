@@ -1,0 +1,24 @@
+Regras:
+SE PetalWidth: 1/3, ENTÃO Class: Iris-setosa
+SE PetalLength: 1/3, ENTÃO Class: Iris-setosa
+SE SepalWidth: 3/3, ENTÃO Class: Iris-setosa
+SE SepalWidth: 2/3, ENTÃO Class: Iris-setosa
+SE SepalLength: 3/5, ENTÃO Class: Iris-setosa
+SE SepalLength: 2/5, ENTÃO Class: Iris-setosa
+SE SepalLength: 1/5, ENTÃO Class: Iris-setosa
+SE PetalWidth: 2/3, ENTÃO Class: Iris-versicolor
+SE PetalLength: 2/3, ENTÃO Class: Iris-versicolor
+SE SepalWidth: 1/3, ENTÃO Class: Iris-versicolor
+SE SepalLength: 5/5, ENTÃO Class: Iris-versicolor
+SE SepalLength: 4/5, ENTÃO Class: Iris-versicolor
+SE SepalLength: 3/5, ENTÃO Class: Iris-versicolor
+SE PetalWidth: 3/3, ENTÃO Class: Iris-virginica
+SE PetalLength: 3/3, ENTÃO Class: Iris-virginica
+SE SepalWidth: 2/3, ENTÃO Class: Iris-virginica
+SE SepalLength: 5/5, ENTÃO Class: Iris-virginica
+SE PetalWidth: 1/3, ENTÃO Class: Iris-palaoro
+SE PetalLength: 1/3, ENTÃO Class: Iris-palaoro
+SE SepalWidth: 1/3, ENTÃO Class: Iris-palaoro
+SE SepalLength: 1/5, ENTÃO Class: Iris-palaoro
+SE SepalLength: 2/5, PetalWidth: 2/3, ENTÃO Class: Iris-palaoro
+SE SepalLength: 2/5, PetalLength: 2/3, ENTÃO Class: Iris-palaoro
